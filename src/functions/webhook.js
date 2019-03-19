@@ -1,8 +1,3 @@
- /* THOUGHTS
- * webhook secret should be visible?
- * 
-*/
-
 const config = require('./helpers/configHelper');
 const stripe = require('stripe')(config.stripe.secretKey);
 

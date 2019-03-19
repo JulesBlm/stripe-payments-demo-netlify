@@ -34,7 +34,6 @@ exports.handler = async function(event, context, callback) {
                 amount,
                 currency,
                 payment_method_types: config.paymentMethods,
-                receipt_email: customer_email,
             });
 
             console.log("Succes!", paymentIntent);

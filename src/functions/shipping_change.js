@@ -1,11 +1,9 @@
-const { orders } = require('./helpers/inventory');
 const { headers } = require('./helpers/headers');
 const { products } = require('./helpers/inventory');
 
 const config = require('./helpers/configHelper');
 const stripe = require('stripe')(config.stripe.secretKey);
 stripe.setApiVersion(config.stripe.apiVersion);
-
 
 // Update PaymentIntent with shipping cost.
 exports.handler = async function(event, context, callback) {

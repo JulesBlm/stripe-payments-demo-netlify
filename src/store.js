@@ -59,7 +59,7 @@ class Store {
     if (!this.productsFetchPromise) {
       this.productsFetchPromise = new Promise(async resolve => {
         const productsResponse = await fetch(`${LAMBDA_ENDPOINT}/products`);
-        const products = (await productsResponse.json()).data;
+        const products = (await productsResponse.json());
         products.forEach(product => (this.products[product.id] = product));
         resolve();
       });
@@ -77,14 +77,21 @@ class Store {
           currency,
           items,
         }),
-      });
+      });    
       const data = await response.json();
+      // console.group("createPaymentIntent", data)
       if (data.error) {
+        // console.warn(data.error)
+        console.groupEnd()
         return {error: data.error};
       } else {
+        // console.log("succes")
+        // console.groupEnd()
         return data;
       }
     } catch (err) {
+      // console.warn(err.message);
+      // console.groupEnd()
       return {error: err.message};
     }
   }

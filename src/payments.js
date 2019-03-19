@@ -248,8 +248,7 @@
     // Retrieve the user information from the form.
     const payment = form.querySelector('input[name=payment]:checked').value;
     const name = form.querySelector('input[name=name]').value;
-    const country = form.querySelector('select[name=country] option:checked')
-      .value;
+    const country = form.querySelector('select[name=country] option:checked').value;
     const email = form.querySelector('input[name=email]').value;
     const shipping = {
       name,
@@ -264,7 +263,7 @@
     // Disable the Pay button to prevent multiple click events.
     submitButton.disabled = true;
     submitButton.textContent = 'Processing…';
-
+    // console.log({paymentIntent});
     if (payment === 'card') {
       // Let Stripe.js handle the confirmation of the PaymentIntent with the card Element.
       const response = await stripe.handleCardPayment(
@@ -547,7 +546,7 @@
       config.currency,
       store.getLineItems()
     );
-    paymentIntent = response.paymentIntent;
+    paymentIntent = response; //paymentIntent
   }
   document.getElementById('main').classList.remove('loading');
 

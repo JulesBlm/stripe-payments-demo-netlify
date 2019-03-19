@@ -12,9 +12,8 @@ const config = require('./configHelper');
 
 'use strict';
 
-const stripe = require('stripe')(config.stripe.apiVersion) //config.stripe.secretKey);
-// For product retrieval and listing set API version to 2018-02-28 so that skus are returned.
-stripe.setApiVersion(config.stripe.secretKey);
+const stripe = require('stripe')(config.stripe.secretKey);
+stripe.setApiVersion(config.stripe.apiVersion);
 
 // List all products.
 const listProducts = async () => {
