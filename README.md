@@ -1,7 +1,7 @@
 # Netlify-Stripe-Payments-Demo
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/JulesBlm/stripe-payments-demo-netlify)
 
-The [Stripe Payments Demo](stripe-payments-demo) converted to work on Netlify with Netlify Lambda. 
+The [Stripe Payments Demo](stripe-payments-demo) converted to work on Netlify with Netlify Lambda. Read [this blog post by Kent C. Dodds](https://kentcdodds.com/blog/super-simple-start-to-serverless) for a nice introduction to serverless with Netlify.
 
 Enter your Stripe API keys,  webhook secret and country into the 'Build environment variables' under 'Deploy Settings'. Like below:
 
