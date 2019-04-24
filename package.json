@@ -10,17 +10,18 @@
     "build:lambda": "netlify-lambda build src/functions",
     "build": "npm run build:webpack && npm run build:lambda"
   },
-  "author": "Romain Huet",
+  "author": "Romain Huet, Jules Blom",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/JulesBlm/stripe-payments-demo-netlify.git"
-  },  
+  },
   "dependencies": {
     "dotenv": "^7.0.0",
     "stripe": "^6.28.0"
   },
   "devDependencies": {
+    "netlify-cli": "^2.11.12",
     "netlify-lambda": "^1.4.3",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.3.0"

@@ -13,7 +13,7 @@ const config = require('./configHelper');
 'use strict';
 
 const stripe = require('stripe')(config.stripe.secretKey);
-stripe.setApiVersion(config.stripe.apiVersion);
+stripe.setApiVersion('2018-02-28');
 
 // List all products.
 const listProducts = async () => {
@@ -31,7 +31,7 @@ const productsExist = productList => {
   return productList.data.reduce((accumulator, currentValue) => {
     return (
       accumulator
-      && productList.data.length === 4 &&
+      && productList.data.length === 3 &&
       validProducts.includes(currentValue.id)
     );
   }, !!productList.data.length);

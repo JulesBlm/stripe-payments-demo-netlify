@@ -11,6 +11,10 @@ And add your webhook endpoint in your Stripe dashboard.
 
 ![webhookendpoint](screenshots/webhookendpoint.png)
 
+## Testing
+
+Run `npm run build:webpack` and then run `netlify dev --live` to create a live tunnel for testing.
+
 ## Disclaimer
 
 I'm sure there's still a lot of bugs in this as this project is the first time I've written any Lambda function, or any backend code for that matter. 
@@ -18,7 +22,5 @@ I'm sure there's still a lot of bugs in this as this project is the first time I
 ## To-do List
 
 1. I'm not sure shipping_change endpoint works
-2. Improve way to test locally
-3. Update to netlify-cli instead of netlify-lambda
-4. Update to latest Stripe API version
-5. Don't hardcode LAMBDA_ENDPOINT?
+2. I'm also not sure all payment methods work
+2. Use path parameters instead of query parameters?

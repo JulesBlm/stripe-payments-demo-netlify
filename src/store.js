@@ -42,7 +42,7 @@ class Store {
   // Retrieve the configuration from the API.
   async getConfig() {
     try {
-      const response = await fetch(`${LAMBDA_ENDPOINT}/config`);
+      const response = await fetch(`/.netlify/functions/config`);
       const config = await response.json();
       if (config.stripePublishableKey.includes('live')) {
         // Hide the demo notice if the publishable key is in live mode.
@@ -54,23 +54,41 @@ class Store {
     }
   }
 
-  // Load the product details.
-  loadProducts() {
-    if (!this.productsFetchPromise) {
-      this.productsFetchPromise = new Promise(async resolve => {
-        const productsResponse = await fetch(`${LAMBDA_ENDPOINT}/products`);
-        const products = (await productsResponse.json());
-        products.forEach(product => (this.products[product.id] = product));
-        resolve();
-      });
+
+  // Retrieve a SKU for the Product where the API Version is newer and doesn't include them on v1/product
+  async loadSkus(product_id) {
+    try {
+      const response = await fetch(`/.netlify/functions/products?id=${product_id}`);
+      const skus = await response.json();
+      this.products[product_id].skus = skus;
+    } catch (err) {
+      return {error: err.message};
     }
-    return this.productsFetchPromise;
+  }  
+
+ // Load the product details.
+ loadProducts() {
+  if (!this.productsFetchPromise) {
+    this.productsFetchPromise = new Promise(async resolve => {
+      const productsResponse = await fetch('/.netlify/functions/products');
+      const products = (await productsResponse.json()); //.data;
+      // Check if we have SKUs on the product, otherwise load them separately.
+      for (const product of products) {
+        this.products[product.id] = product;
+        if (!product.skus) {
+          await this.loadSkus(product.id);
+        }
+      }
+      resolve();
+    });
   }
+  return this.productsFetchPromise;
+}
 
   // Create the PaymentIntent with the cart details.
   async createPaymentIntent(currency, items) {
     try {
-      const response = await fetch(`${LAMBDA_ENDPOINT}/payment_intents`, {
+      const response = await fetch(`/.netlify/functions/payment_intents`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
@@ -79,19 +97,12 @@ class Store {
         }),
       });    
       const data = await response.json();
-      // console.group("createPaymentIntent", data)
       if (data.error) {
-        // console.warn(data.error)
-        console.groupEnd()
         return {error: data.error};
       } else {
-        // console.log("succes")
-        // console.groupEnd()
         return data;
       }
     } catch (err) {
-      // console.warn(err.message);
-      // console.groupEnd()
       return {error: err.message};
     }
   }
@@ -103,7 +114,7 @@ class Store {
     shippingOption
   ) {
     try {
-      const response = await fetch(`${LAMBDA_ENDPOINT}/shipping_change?id=${paymentIntent}`,
+      const response = await fetch(`/.netlify/functions/shipping_change?id=${paymentIntent}`,
         {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},

@@ -1,11 +1,6 @@
 const config = require('./helpers/configHelper');
 const stripe = require('stripe')(config.stripe.secretKey);
 
-const headers = {
-  "Access-Control-Allow-Origin" : "*",
-  "Access-Control-Allow-Headers": "Content-Type"
-};
-
 // Webhook handler to process payments for sources asynchronously.
 exports.handler = async function(event, context, callback) {
     // console.log("event.body type", type of event.body);
@@ -33,10 +28,9 @@ exports.handler = async function(event, context, callback) {
         } catch (err) {
           console.log(`⚠️ Webhook signature verification failed.`, err);
           //return res.sendStatus(400);
-          callback(null, {
-            headers,
+          return {
             statusCode: 400
-          });
+          };
         }
 
         // Extract the object from the event.
@@ -81,10 +75,9 @@ exports.handler = async function(event, context, callback) {
         );
         // Check whether this PaymentIntent requires a source.
         if (paymentIntent.status != 'requires_payment_method') {
-          callback(null, {
+          return {
             statusCode: 403,
-            headers
-          });
+          };
         }
 
         // Confirm the PaymentIntent with the chargeable source.
@@ -118,14 +111,14 @@ exports.handler = async function(event, context, callback) {
     console.log("At the end!")
 
     // Return a 200 success code to Stripe.
-    callback(null, {
+    return {
       statusCode: 200
-    });
+    };
  
   } else {
-    callback(null, {
+    return {
       statusCode: 400,
       body: "/webhook: THIS IS A POST ONLY"
-    });
+    };
   }
 }

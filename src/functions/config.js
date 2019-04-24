@@ -1,10 +1,8 @@
-const { headers } = "./helpers/headers";
 const configHelper = require('./helpers/configHelper');
 
-exports.handler = async function(event, context, callback) {    
-    callback(null, {
+exports.handler = async function(event, context) {    
+    return {
         statusCode: 200,
-        headers,
         body: JSON.stringify({
             stripePublishableKey: configHelper.stripe.publishableKey,
             stripeCountry: configHelper.stripe.country,
@@ -13,5 +11,5 @@ exports.handler = async function(event, context, callback) {
             paymentMethods: configHelper.paymentMethods,
             shippingOptions: configHelper.shippingOptions,            
         })
-    })
+    }
 };

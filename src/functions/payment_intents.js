@@ -19,7 +19,7 @@ const calculatePaymentAmount = async items => {
 };
 
 // Create the PaymentIntent on the backend.
-exports.handler = async function(event, context, callback) {
+exports.handler = async function(event, context) {
     if (event.httpMethod === 'POST') {
         console.log("POST METHOD")
         let { currency, items, customer_email } = JSON.parse(event.body);
@@ -38,28 +38,28 @@ exports.handler = async function(event, context, callback) {
 
             console.log("Succes!", paymentIntent);
 
-            callback(null, {
+            return {
                 statusCode: 200,
                 body: JSON.stringify(paymentIntent)
-            });
+            };
         } catch (err) {
             console.log("error", err);
-            callback(null, {
+            return {
                 statusCode: 500,
                 body: JSON.stringify({err: err.message})
-            });
+            };
         }
     } else if (event.httpMethod === 'GET') {
         console.log("GET STATUS");
         const paymentIntent = await stripe.paymentIntents.retrieve(event.queryStringParameters.id);
-        callback(null, {
+        return {
             statusCode: 200,
             body: JSON.stringify({paymentIntent: {status: paymentIntent.status}})
-        });
+        };
     } else {
-        callback(null, {
+        return {
           statusCode: 400,
           body: "/payment_intents: THIS IS A NOT GET METHOD"
-        });
+        };
     }
 }
