@@ -11,25 +11,11 @@ exports.handler = async function(event, context) {
                 statusCode: 200,
                 body: JSON.stringify(await products.retrieve(event.queryStringParameters.id))
             };
-            return;
         } else {
-            // console.log("product retrieve list first time");
-            const productList = await products.list();
-            console.log(productList.data);
-            // Check if products exist on Stripe Account.
-            if (products.exist(productList)) {
-                console.log("Product exists");
-                return {
-                    statusCode: 200,
-                    body: JSON.stringify(productList.data)
-                };
-            } else {
-                console.log("Product does not exist");
-                return {
-                    statusCode: 200,
-                    body: JSON.stringify(products.list())
-                };
-            }
+            return {
+                statusCode: 200,
+                body: JSON.stringify(await products.list())
+            };
         }
     } else {
         return {

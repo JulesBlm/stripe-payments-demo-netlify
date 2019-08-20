@@ -1,4 +1,5 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
   <title>Stripe Payments Demo</title>
@@ -14,16 +15,16 @@
 </head>
 
 <body>
-  <div id="main" class="loading">
-    <header>
-      <a class="shop" href="/">Stripe Payments Demo</a>
+  <main id="main" class="loading">
+    <header class="header">
+      <a class="shop" href="/">Stripe Payments Netlify Demo</a>
       <a class="github" href="https://github.com/JulesBlm/stripe-payments-demo-netlify" rel="nofollower">View on GitHub</a>
     </header>
     <div id="checkout">
       <div id="payment-request">
         <div id="payment-request-button"></div>
       </div>
-      <form id="payment-form" method="POST">
+      <form id="payment-form" method="POST" action="/.netlify/functions/orders">
         <p class="instruction">Complete your shipping and payment details below</p>
         <section>
           <h2>Shipping &amp; Billing Information</h2>
@@ -203,11 +204,11 @@
         <p class="error-message"></p>
       </div>
     </div>
-  </div>
-  <div id="summary">
-    <header>
+  </main>
+  <aside id="summary">
+    <div class="header">
       <h1>Order Summary</h1>
-    </header>
+    </div>
     <div id="order-items"></div>
     <div id="order-total">
       <div class="line-item subtotal">
@@ -228,8 +229,8 @@
               <td class="card-number">4242<span></span>4242<span></span>4242<span></span>4242</td>
             </tr>
             <tr>
-              <td><a href="https://stripe.com/guides/strong-customer-authentication" target="_blank">3D Secure auth</a> required:</td>
-              <td class="card-number">4000<span></span>0000<span></span>0000<span></span>3063</td>
+              <td><a href="https://stripe.com/guides/strong-customer-authentication" target="_blank">Authentication</a> required:</td>
+              <td class="card-number">4000<span></span>0027<span></span>6000<span></span>3184</td>
             </tr>
             </table>
           <p class="note"> 
@@ -243,7 +244,7 @@
         <p class="price" data-total></p>
       </div>
     </div>
-  </div>
+  </aside>
   <!-- Stripe.js v3 for Elements -->
   <script src="https://js.stripe.com/v3/"></script>
   <!-- Library to render QR codes -->

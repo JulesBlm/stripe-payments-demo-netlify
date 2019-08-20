@@ -1,29 +1,36 @@
 {
   "name": "netlify-stripe",
-  "version": "1.0.0",
+  "version": "1.1.0",
+  "private": true,
   "description": "Sample store using Netlify Lambda and Stripe accepting universal payments on the web with Stripe Elements, Payment Request, Apple Pay, Google Pay, Microsoft Pay, and the Sources API.",
   "main": "index.js",
-  "scripts": {
-    "start:lambda": "netlify-lambda serve src/functions",
-    "start:webpack": "webpack-dev-server -mode=development --content-base dist/",
-    "build:webpack": "webpack -p --progress --display-error-details",
-    "build:lambda": "netlify-lambda build src/functions",
-    "build": "npm run build:webpack && npm run build:lambda"
-  },
   "author": "Romain Huet, Jules Blom",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/JulesBlm/stripe-payments-demo-netlify.git"
   },
+  "engines": {
+    "node": "10.x"
+  },
+  "scripts": {
+    "start:lambda": "netlify-lambda serve src/functions",
+    "dev": "netlify dev -l && npm run webhook",
+    "build:webpack": "webpack -p --progress --display-error-details",
+    "build:lambda": "netlify-lambda build src/functions",
+    "build": "npm run build:webpack && npm run build:lambda",
+    "webhook": "stripe listen --project-name=stripe-payments-demo --forward-to http://localhost:8000/webhook",
+    "postinstall": "brew install stripe/stripe-cli/stripe",
+    "setup-products": "node setup.js"
+  },
   "dependencies": {
-    "dotenv": "^7.0.0",
-    "stripe": "^6.28.0"
+    "dotenv": "^8.1.0",
+    "stripe": "^7.8.0"
   },
   "devDependencies": {
-    "netlify-cli": "^2.11.12",
-    "netlify-lambda": "^1.4.3",
-    "webpack": "^4.29.6",
-    "webpack-cli": "^3.3.0"
+    "netlify-cli": "^2.12.0",
+    "netlify-lambda": "^1.6.2",
+    "webpack": "^4.39.2",
+    "webpack-cli": "^3.3.7"
   }
 }

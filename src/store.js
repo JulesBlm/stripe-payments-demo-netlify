@@ -8,6 +8,7 @@
  * are loaded for convenience, there is no cart management functionality, etc.).
  * A production app would need to handle this very differently.
  */
+const netlifyLambdaPrefix = '/.netlify/functions';
 
 class Store {
   constructor() {
@@ -42,7 +43,7 @@ class Store {
   // Retrieve the configuration from the API.
   async getConfig() {
     try {
-      const response = await fetch(`/.netlify/functions/config`);
+      const response = await fetch(`${netlifyLambdaPrefix}/config`);
       const config = await response.json();
       if (config.stripePublishableKey.includes('live')) {
         // Hide the demo notice if the publishable key is in live mode.
@@ -58,7 +59,7 @@ class Store {
   // Retrieve a SKU for the Product where the API Version is newer and doesn't include them on v1/product
   async loadSkus(product_id) {
     try {
-      const response = await fetch(`/.netlify/functions/products?id=${product_id}`);
+      const response = await fetch(`${netlifyLambdaPrefix}/products?id=${product_id}`);
       const skus = await response.json();
       this.products[product_id].skus = skus;
     } catch (err) {
@@ -70,8 +71,13 @@ class Store {
  loadProducts() {
   if (!this.productsFetchPromise) {
     this.productsFetchPromise = new Promise(async resolve => {
-      const productsResponse = await fetch('/.netlify/functions/products');
-      const products = (await productsResponse.json()); //.data;
+      const productsResponse = await fetch(`${netlifyLambdaPrefix}/products`);
+      const products = (await productsResponse.json()).data;
+      if (!products.length) {
+        throw new Error(
+          'No products on Stripe account! Make sure the setup script has run properly.'
+        );
+      }      
       // Check if we have SKUs on the product, otherwise load them separately.
       for (const product of products) {
         this.products[product.id] = product;
@@ -88,7 +94,7 @@ class Store {
   // Create the PaymentIntent with the cart details.
   async createPaymentIntent(currency, items) {
     try {
-      const response = await fetch(`/.netlify/functions/payment_intents`, {
+      const response = await fetch(`${netlifyLambdaPrefix}/payment_intents`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
@@ -114,7 +120,7 @@ class Store {
     shippingOption
   ) {
     try {
-      const response = await fetch(`/.netlify/functions/shipping_change?id=${paymentIntent}`,
+      const response = await fetch(`${netlifyLambdaPrefix}/shipping_change?id=${paymentIntent}`,
         {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
@@ -169,7 +175,7 @@ class Store {
       let lineItem = document.createElement('div');
       lineItem.classList.add('line-item');
       lineItem.innerHTML = `
-        <img class="image" src="/images/products/${product.id}.png">
+        <img class="image" src="/images/products/${product.id}.png" alt="${product.name}">
         <div class="label">
           <p class="product">${product.name}</p>
           <p class="sku">${Object.values(sku.attributes).join(' ')}</p>

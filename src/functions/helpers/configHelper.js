@@ -39,10 +39,10 @@ module.exports = {
   // You can fill them in your own `.env` file.
   stripe: {
     // The two-letter country code of your Stripe account (required for Payment Request).
-    country: process.env.STRIPE_ACCOUNT_COUNTRY,
+    country: process.env.STRIPE_ACCOUNT_COUNTRY || 'US',
     // API version to set for this app (Stripe otherwise uses your default account version).
   // For product retrieval and listing set API version to 2018-02-28 so that skus are returned in products.
-    apiVersion: '2018-02-28',
+    apiVersion: '2019-08-14',
     // Use your test keys for development and live keys for real charges in production.
     // For non-card payments like iDEAL, live keys will redirect to real banking sites.
     publishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
@@ -53,7 +53,18 @@ module.exports = {
   },
 
   shippingOptions: [
-
+    {
+      id: 'free',
+      label: 'Free Shipping',
+      detail: 'Delivery within 5 days',
+      amount: 0,
+    },
+    {
+      id: 'express',
+      label: 'Express Shipping',
+      detail: 'Next day delivery',
+      amount: 500,
+    },
   ]
   
 };

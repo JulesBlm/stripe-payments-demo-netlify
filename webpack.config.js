@@ -13,7 +13,6 @@ module.exports = {
     },
     plugins: [
         new webpack.DefinePlugin({
-            LAMBDA_ENDPOINT: JSON.stringify(process.env.LAMBDA_ENDPOINT),
             STRIPE_PUBLISHABLE_KEY: JSON.stringify(process.env.STRIPE_PUBLISHABLE_KEY),
             STRIPE_WEBHOOK_SECRET: JSON.stringify(process.env.STRIPE_WEBHOOK_SECRET),
         }),
