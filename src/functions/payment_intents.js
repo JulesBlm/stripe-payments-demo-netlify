@@ -25,9 +25,9 @@ exports.handler = async function(event, context) {
         let { currency, items, customer_email } = JSON.parse(event.body);
         const amount = await calculatePaymentAmount(items);
 
-        console.log({ customer_email });
-        console.log({ amount });
-        console.log("paymentmethods", config.paymentMethods);
+        // console.log({ customer_email });
+        // console.log({ amount });
+        // console.log("paymentmethods", config.paymentMethods);
 
         try {
             const paymentIntent = await stripe.paymentIntents.create({

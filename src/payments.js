@@ -192,6 +192,7 @@
 
   // Callback when the shipping option is changed.
   paymentRequest.on('shippingoptionchange', async event => {
+    console.log(event)
     // Update the PaymentIntent to reflect the shipping cost.
     const response = await store.updatePaymentIntentWithShippingCost(
       paymentIntent.id,
@@ -673,9 +674,6 @@
     let label = `Pay ${amount}`;
     if (paymentMethod !== 'card') {
       label = `Pay ${amount} with ${name}`;
-    }
-    if (paymentMethod === 'wechat') {
-      label = `Generate QR code to pay ${amount} with ${name}`;
     }
     if (paymentMethod === 'sepa_debit' && bankName) {
       label = `Debit ${amount} from ${bankName}`;
