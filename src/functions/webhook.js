@@ -44,7 +44,6 @@ exports.handler = async function(event, context, callback) {
       }
       const object = data.object;
       
-      // PaymentIntent Beta, see https://stripe.com/docs/payments/payment-intents 
       // Monitor payment_intent.succeeded & payment_intent.payment_failed events.
       if (object.object === 'payment_intent') {
         const paymentIntent = object;
@@ -56,12 +55,9 @@ exports.handler = async function(event, context, callback) {
             ? paymentIntent.last_payment_error.payment_method
             : paymentIntent.last_payment_error.source;
           
+            
           console.log(
-            `🔔  Webhook received! Payment on ${paymentSourceOrMethod.object} ${
-              paymentSourceOrMethod.id
-            } of type ${paymentSourceOrMethod.type} for PaymentIntent ${
-              paymentIntent.id
-            } failed.`
+            `🔔  Webhook received! Payment on ${paymentSourceOrMethod.object} ${paymentSourceOrMethod.id} of type ${paymentSourceOrMethod.type} for PaymentIntent ${paymentIntent.id} failed.`
           );
           // Note: you can use the existing PaymentIntent to prompt your customer to try again by attaching a newly created source:
           // https://stripe.com/docs/payments/payment-intents#lifecycle

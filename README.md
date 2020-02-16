@@ -29,14 +29,3 @@ The app also supports both Multibanco and EPS which are currently in Public Beta
 2. Run `npm run build`
 3. Then to set up the products in Stripe run `npm run setup-products`
 4. Run `npm run dev` to run a local server with Netlify Dev and the Stripe CLI.
-
-## Disclaimer
-
-I'm sure there's still a lot of bugs in this as this project is the first time I've written any Lambda function, or any backend code for that matter. 
-
-## To-do List
-
-1. I'm not sure shipping_change endpoint works
-2. I'm also not sure all payment methods work
-3. Remove netlify-lambda and only use netlify-cli
-2. Use path parameters instead of query parameters?

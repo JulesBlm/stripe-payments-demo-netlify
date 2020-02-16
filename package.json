@@ -1,6 +1,6 @@
 {
   "name": "netlify-stripe",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "private": true,
   "description": "Sample store using Netlify Lambda and Stripe accepting universal payments on the web with Stripe Elements, Payment Request, Apple Pay, Google Pay, Microsoft Pay, and the Sources API.",
   "main": "index.js",
@@ -11,7 +11,7 @@
     "url": "https://github.com/JulesBlm/stripe-payments-demo-netlify.git"
   },
   "engines": {
-    "node": "10.x"
+    "node": ">=10.x"
   },
   "scripts": {
     "start:lambda": "netlify-lambda serve src/functions",
@@ -25,12 +25,12 @@
   },
   "dependencies": {
     "dotenv": "^8.2.0",
-    "stripe": "^7.14.0"
+    "stripe": "^8.18.0"
   },
   "devDependencies": {
-    "netlify-cli": "^2.25.0",
+    "netlify-cli": "^2.32.0",
     "netlify-lambda": "^1.6.3",
-    "webpack": "^4.41.4",
-    "webpack-cli": "^3.3.10"
+    "webpack": "^4.41.6",
+    "webpack-cli": "^3.3.11"
   }
 }
