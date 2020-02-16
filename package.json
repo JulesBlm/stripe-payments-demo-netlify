@@ -20,7 +20,6 @@
     "build:lambda": "netlify-lambda build src/functions",
     "build": "npm run build:webpack && npm run build:lambda",
     "webhook": "stripe listen --project-name=stripe-payments-demo --forward-to http://localhost:8000/webhook",
-    "postinstall": "brew install stripe/stripe-cli/stripe",
     "setup-products": "node setup.js"
   },
   "dependencies": {
