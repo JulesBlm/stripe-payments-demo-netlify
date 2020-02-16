@@ -5,7 +5,8 @@ require('dotenv').config();
 module.exports = {
     entry: {
         'store': './src/store.js',
-        'payments': './src/payments.js'
+        'payments': './src/payments.js',
+        'generate': './src/generate.js'
     }, 
     output: {
         filename: '[name].js',
