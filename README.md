@@ -13,12 +13,12 @@ And add your webhook endpoint in your Stripe Developer dashboard.
 ![webhookendpoint](screenshots/webhookendpoint.png)
 
 ## Payments Integration
-The frontend code for the demo is in the 'dist/' directory.
+The frontend code for the demo is in the 'src/' directory.
 
 The core logic of the Stripe integration is mostly contained within two files:
 
-'dist/javascripts/payments.js' creates the payment experience on the frontend using Stripe Elements.
-The functions folders defines the serverless functions on the backend that create Stripe charges and receive webhook events.
+'src/payments.js' creates the payment experience on the frontend using Stripe Elements.
+The 'src/functions' folders defines the serverless functions on the backend that create Stripe charges and receive webhook events.
 
 ### Beyond Cards: Payments Sources for Europe and Asia
 This demo also shows how to reach customers in Europe and Asia by supporting their preferred way to pay online. It supports payment methods such as ACH credit transfers, Alipay, Bancontact, iDEAL, Giropay, SEPA Direct Debit, SOFORT, and WeChat Pay. Be sure to turn these on in your Stripe dashboard if you plan to use these live.
